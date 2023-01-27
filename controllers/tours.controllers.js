@@ -47,10 +47,17 @@ module.exports.getTour = async (req, res, next) => {
       console.log(queries);
     }
 
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(",").join(" ");
+      queries.sortBy = sortBy;
+      console.log(queries);
+    }
+
     const tours = await Tour.find({})
       .skip(queries.skip)
       .limit(queries.limit)
-      .select(queries.fieldsBy);
+      .select(queries.fieldsBy)
+      .sort(queries.sortBy);
     if (tours.length === 0) {
       return res.status(400).json({
         status: false,
