@@ -6,6 +6,12 @@ const {
   globalErrorStatus,
   globalErrorHandler,
 } = require("./error/globalError");
+const corsConfig = {
+  origin: true,
+  credentials: true,
+};
+app.use(cors(corsConfig));
+app.options("*", cors(corsConfig));
 
 app.use([morgan("dev"), express.json(), cors()]);
 // for router middleware:
