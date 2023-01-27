@@ -13,10 +13,7 @@ mongoose.connect(process.env.DB_LOCAL).then(() => {
 });
 
 // server
-const port = process.env.PORT || 8080;
-
-server.listen(port, () => {
-  console.log(`App is running on port ${port}`);
-});
+const PORT = process.env.PORT || 4000;
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 // server file e amra sob connect kore rakhbo tai ei server file e amra listen kore diyechi
