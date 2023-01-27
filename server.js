@@ -7,10 +7,12 @@ const app = require("./app");
 const server = http.createServer(app);
 
 // for mongoose connections:
-mongoose.connect(process.env.DB_LOCAL).then(() => {
-  console.log(process.env.DB_LOCAL);
-  console.log("Mongoose connection successfully established");
-});
+mongoose
+  .connect(process.env.DB_LOCAL || "mongodb://0.0.0.0/toursDb")
+  .then(() => {
+    console.log(process.env.DB_LOCAL);
+    console.log("Mongoose connection successfully established");
+  });
 
 // server
 const PORT = process.env.PORT || 4000;
