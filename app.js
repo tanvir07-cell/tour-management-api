@@ -2,25 +2,17 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const morgan = require("morgan");
+const {
+  globalErrorStatus,
+  globalErrorHandler,
+} = require("./error/globalError");
 
 app.use([morgan("dev"), express.json(), cors()]);
 // for router middleware:
 app.use("/api/v1/tours", require("./routes/tours.routes"));
 
-// global error handler middleware:
-app.use((req, res, next) => {
-  const err = new Error("Pages not found!");
-  err.status = 404;
-  next(err);
-});
-app.use((err, req, res, next) => {
-  if (err.status) {
-    return res.status(err.status).send(`<h1>${err.message}</h1>`);
-  }
-
-  //   server error:
-  return res.status(500).send(`<h1>Server error occured!</h1>`);
-});
+// for global error handler middleware:
+app.use([globalErrorStatus, globalErrorHandler]);
 
 app.get("/health", (req, res) => {
   const data = {
