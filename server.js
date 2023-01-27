@@ -9,7 +9,8 @@ const server = http.createServer(app);
 // for mongoose connections:
 mongoose.connect(process.env.DB_LOCAL).then(() => {
   console.log(process.env.DB_LOCAL);
-  console.log("Mongoose connection successfully established");
+
+  console.log("Mongoose server connection successfully established");
 });
 
 // server
