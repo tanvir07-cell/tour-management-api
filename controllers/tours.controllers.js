@@ -72,3 +72,27 @@ module.exports.getTourById = async (req, res, next) => {
     return res.status(400).json({ Error: err.message });
   }
 };
+
+module.exports.updateTourById = async (req, res, next) => {
+  try {
+    const tour = await Tour.findOneAndUpdate({ _id: req.params.id }, req.body, {
+      runValidators: true,
+    });
+
+    if (!tour) {
+      return res.status(400).json({
+        status: false,
+        message: "can't update the tour",
+      });
+    }
+    return res.status(200).json({
+      status: true,
+      message: "Successfully updated the tour",
+    });
+  } catch (err) {
+    // return res.status(400).json({ Error: err.message });
+
+    // passing to the global error handler:
+    next(err);
+  }
+};
