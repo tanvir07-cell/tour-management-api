@@ -41,12 +41,16 @@ module.exports.getTour = async (req, res, next) => {
     console.log(queries);
 
     // for projection(mane e kon kon field er data dekhte chaitesi)
-    // if (req.query.fields) {
-    //   const fieldsBy = req.query.fileds.split(",").join(" ");
-    //   queries.fieldsBy = fieldsBy;
-    // }
-    // console.log(queries);
-    const tours = await Tour.find({}).skip(queries.skip).limit(queries.limit);
+    if (req.query.fields) {
+      const fieldsBy = req.query.fields.split(",").join(" ");
+      queries.fieldsBy = fieldsBy;
+      console.log(queries);
+    }
+
+    const tours = await Tour.find({})
+      .skip(queries.skip)
+      .limit(queries.limit)
+      .select(queries.fieldsBy);
     if (tours.length === 0) {
       return res.status(400).json({
         status: false,
